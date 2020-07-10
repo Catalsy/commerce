@@ -8,8 +8,9 @@ from .models import User, Listing, Comment, Bid
 
 
 def index(request):
-    return render(request, "auctions/index.html")
-
+    return render(request, "auctions/index.html", { 
+    "listings": Listing.objects.filter(active = True)
+    })
 
 def login_view(request):
     if request.method == "POST":
@@ -79,3 +80,34 @@ def create_listing(request):
 
     else:
         return render(request, "auctions/create-listing.html")
+
+def listing(request, id):
+    l = Listing.objects.get(id=id)
+    user = request.user
+
+    if user:
+        in_watchlist = user.watchlist.filter(id=id)
+
+    return render(request, "auctions/listing.html", {
+        "listing": l, 
+        "owner": l.owner.first(), 
+        "in_watchlist": in_watchlist
+    })
+
+def add_watchlist(request, id):
+    if request.method == 'POST':
+        l = Listing.objects.get(id=id)
+        user = request.user
+        user.watchlist.add(l)
+
+    return HttpResponseRedirect(reverse('listing', kwargs={'id': id}))
+
+
+
+def remove_watchlist(request, id):
+    if request.method == 'POST':
+        l = Listing.objects.get(id=id)
+        user = request.user
+        user.watchlist.remove(l)
+
+    return HttpResponseRedirect(reverse('listing', kwargs={'id': id}))

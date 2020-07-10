@@ -1,3 +1,20 @@
 body {
     padding: 10px;
 }
+
+img {
+    height: 20vh;
+    width: auto;
+    float: left;
+
+}
+
+.list {
+    padding: 1%;
+    clear: both;
+    border: solid;
+}
+
+p {
+    margin: 1%;
+}
