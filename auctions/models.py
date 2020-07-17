@@ -14,8 +14,7 @@ class Listing(models.Model):
         return f"{self.title}"
 
 class User(AbstractUser):
-    watchlist = models.ManyToManyField(Listing, blank=True)
-    
+    watchlist = models.ManyToManyField(Listing, blank=True) 
 
 class Bid(models.Model):
     listing = models.ForeignKey(Listing, on_delete = models.CASCADE, related_name="current_bid")

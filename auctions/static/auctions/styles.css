@@ -18,3 +18,7 @@ img {
 p {
     margin: 1%;
 }
+
+.comment {
+    border: solid;
+}
